@@ -23,3 +23,9 @@ Mixing Phase and expert networks. And have it bedirectional
 
 # Pyhsical
 ## Evolved Controllers for Simulated Locomotion
+
+## Data-Driven Biped Control
+
+## DeepLoco: Dynamic Locomotion Skills Using Hierarchical Deep Reinforcement Learning
+
+## ASE: Large-Scale Reusable Adversarial Skill Embeddings for Physically

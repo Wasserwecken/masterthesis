@@ -14,7 +14,6 @@ Mixing Phase and expert networks. And have it bedirectional
 
 ## Local Motion Phases for Learning Multi-Contact Character Movements
 
-
 ## Neural Animation Layering for Synthesizing Martial Arts Movements
 
 ## DeepPhase: Periodic Autoencoders for Learning Motion Phase Manifolds

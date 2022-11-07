@@ -18,6 +18,20 @@ ensuring the edited motion remains natural. As a result, the system
 can produce smooth, high quality motion sequences without any
 manual pre-processing of the training data.
 
+- Idea: Multiple systems to disambigius and stabelize inputs and animations
+- System has 3 stages / networks
+    - Process the input for disambiguation
+    - Convert high level params to low level
+    - Generating motion with an Auto-Encorder
+- Input
+    - Joint positions
+    - Root-bone is origin
+    - Forward direction
+    - Movement velocity
+    - Rotational velocity
+    - Foot contacts
+
+
 ## Phase-Functioned Neural Networks for Character Control
 > We present a real-time character control mechanism using a novel neural
 network architecture called a Phase-Functioned Neural Network. In this
@@ -40,6 +54,28 @@ gigabytes of motion data. Our work is most appropriate for controlling
 characters in interactive scenes such as computer games and virtual reality
 systems.
 
+- Idea: Extract phases for animation and have multiple network weights
+- System has one feed-fowrad network
+    - But the network exists 4 times with diffrent weights
+    - The weights are cycled through by the "anmation phase"
+    - The phase defines the animation periodicity, defined by foot step timing
+- Inputs
+    - Trajectory positions
+    - Trajectory directions
+    - Trajectory terrain heights
+    - Joint local positions
+    - Joint local velocities
+    - Gait mode
+- Outputs
+    - Trajectory positions
+    - Trajectory directions
+    - Joint local positions
+    - Joint local velocities
+    - Root translation XZ
+    - Root rotation
+    - Change in phase
+    - Foot contact labels
+
 ## Mode-Adaptive Neural Networks for Quadruped Motion Control
 > Quadruped motion includes a wide variation of gaits such as walk, pace,
 trot and canter, and actions such as jumping, sitting, turning and idling.
@@ -58,6 +94,29 @@ unstructured motion capture data, in an end-to-end fashion. In addition, the
 users are released from performing complex labeling of phases in different
 gaits. We show that this architecture is suitable for encoding the multimodality of quadruped locomotion and synthesizing responsive motion in
 real-time.
+
+- Idea: Have multiple network weights and let choose another network the mixing of them
+- Has two stages
+    - Gating network, to determine expert blending coefficients
+    - Motion network, that exists X times (experts) which weights are blendet
+- Inputs
+    - Trajectory positions
+    - Trajectory directions
+    - Trajectory velocities relative to state
+    - Trajectory desired velocities for state
+    - Character action mode
+    - Joint local positions
+    - Joint local rotations
+    - Joint local velocities
+- Outputs
+    - Trajectory positions
+    - Trajectory directions
+    - Trajectory velocities
+    - Joint local positions
+    - Joint local rotation
+    - Joint local velocities
+    - Root translation XZ
+    - Root velocity
 
 ## Neural State Machine for Character-Scene Interactions
 > We propose Neural State Machine, a novel data-driven framework to guide
@@ -78,6 +137,46 @@ of our model with various scene interaction tasks such as sitting on a chair,
 avoiding obstacles, opening and entering through a door, and picking and
 carrying objects generated in real-time just from a single model.
 
+- Idea: HTake as input the environment too and compute the animation ego centric AND local centric
+- Has three stages
+    - Gating network, to determine expert blending coefficients
+    - Motion network, that exists X times (experts) which weights are blendet
+    - Enconding networks as input for the motion network
+        - Interaction geometry
+        - Environment geometry
+        - Frame input
+        - Goal input
+- Inputs
+    - Frame
+        - Trajectory positions
+        - Trajectory directions
+        - Gait mode mode
+        - Joint local positions
+        - Joint local rotations
+        - Joint local velocities
+    - Goal
+        - Goal positions
+        - Goal directions
+        - Goal action mode
+    - Geometry as volumentric
+    - Environment as volumentric
+    - Phase?
+- Outputs
+    - Pose local
+        - Positions
+        - Rotations
+        - Velocities
+    - Root trajectories local
+        - Positions
+        - Directions
+        - Action modes
+    - Root trajectories in goal space
+        - Positions
+        - Directions
+    - Goal inputs
+    - Contact labels
+    - Phase update
+
 ## Local Motion Phases for Learning Multi-Contact Character Movements
 > Training a bipedal character to play basketball and interact with objects, or
 a quadruped character to move in various locomotion modes, are difficult
@@ -95,6 +194,46 @@ abstract control signals given by a gamepad, which can be useful for changing
 the style of the motion under the same context. Our scheme is useful for
 animating contact-rich, complex interactions for real-time applications such
 as computer games.
+
+- Idea: Extract the phase not for the whole animation but for every key bone.
+- Has two stages
+    - Gating network, to determine expert blending coefficients
+    - Motion network, that exists X times (experts) which weights are blendet
+- Inputs
+    - Joints
+        - local positions
+        - local rotations
+        - local velocities
+    - Control
+        - Trajectory positions
+        - Trajectory directions
+        - Trajectory velocities
+        - Interaction vectors (for the ball)
+        - Gait mode
+    - Conditions
+        - Ball movement
+        - Contact information of key bones
+    - Opponent
+        - Opponent distance
+        - Diffrence in Tracejtories (Pos, Rot, Dir)
+    - Local motion phases
+        - for each key bone
+Outputs
+    - Joints
+        - local positions
+        - local rotations
+        - local velocities
+    - Control
+        - Trajectory positions
+        - Trajectory directions
+        - Trajectory velocities
+        - Interaction vectors (for the ball)
+        - Gait mode
+    - Conditions
+        - Ball movement
+        - Contact information of key bones
+    - Local motion phases
+        - for each key bone
 
 ## Neural Animation Layering for Synthesizing Martial Arts Movements
 > Interactively synthesizing novel combinations and variations of character
@@ -121,6 +260,14 @@ enables iterative adding of control modules for different motion tasks and
 behaviors. Our system can be used for offline and online motion generation
 alike, and is relevant for real-time applications such as computer games.
 
+Idea: First predict then blend tracjetories, then generate full pose.
+- Has three stages
+    - First multiple networks predict trajectories
+    - Trajectories are then getting blended
+    - Then full pose is determined by
+        - Network of experts
+        - Experts blender by an gaiting network
+
 ## DeepPhase: Periodic Autoencoders for Learning Motion Phase Manifolds
 > Learning the spatial-temporal structure of body movements is a fundamental
 problem for character motion synthesis. In this work, we propose a novel
@@ -135,6 +282,8 @@ embedding can significantly help to improve neural motion synthesis in
 a number of tasks, including diverse locomotion skills, style-based movements, dance motion synthesis from music, synthesis of dribbling motions
 in football, and motion query for matching poses within large animation
 databases.
+
+
 
 # Pyhsical
 ## Evolved Controllers for Simulated Locomotion

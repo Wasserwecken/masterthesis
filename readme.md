@@ -339,3 +339,46 @@ GPU-based simulator, we are able to train skill embeddings using over a
 decade of simulated experiences, enabling our model to learn a rich and
 versatile repertoire of skills. We show that a single pre-trained model can be
 effectively applied to perform a diverse set of new tasks.
+
+
+## GANimator Neural Motion Synthesis from a Single Sequence
+> We present GANimator, a generative model that learns to synthesize novel
+motions from a single, short motion sequence. GANimator generates motions
+that resemble the core elements of the original motion, while simultaneously
+synthesizing novel and diverse movements. Existing data-driven techniques
+for motion synthesis require a large motion dataset which contains the desired and specific skeletal structure. By contrast, GANimator only requires
+training on a single motion sequence, enabling novel motion synthesis for a
+variety of skeletal structures e.g., bipeds, quadropeds, hexapeds, and more.
+Our framework contains a series of generative and adversarial neural networks, each responsible for generating motions in a specific frame rate. The
+framework progressively learns to synthesize motion from random noise,
+enabling hierarchical control over the generated motion content across varying levels of detail. We show a number of applications, including crowd
+simulation, key-frame editing, style transfer, and interactive control, which
+all learn from a single input sequence.
+
+## Real-time Controllable Motion Transition for Characters
+> Real-time in-between motion generation is universally required in games
+and highly desirable in existing animation pipelines. Its core challenge lies in
+the need to satisfy three critical conditions simultaneously: quality, controllability and speed, which renders any methods that need offline computation
+(or post-processing) or cannot incorporate (often unpredictable) user control
+undesirable. To this end, we propose a new real-time transition method to
+address the aforementioned challenges. Our approach consists of two key
+
+## Robust Motion In-betweening
+> In this work we present a novel, robust transition generation technique
+that can serve as a new tool for 3D animators, based on adversarial recurrent neural networks. The system synthesizes high-quality motions that
+use temporally-sparse keyframes as animation constraints. This is reminiscent of the job of in-betweening in traditional animation pipelines, in
+which an animator draws motion frames between provided keyframes. We
+first show that a state-of-the-art motion prediction model cannot be easily
+converted into a robust transition generator when only adding conditioning information about future keyframes. To solve this problem, we then
+propose two novel additive embedding modifiers that are applied at each
+timestep to latent representations encoded inside the network’s architecture.
+One modifier is a time-to-arrival embedding that allows variations of the
+transition length with a single model. The other is a scheduled target noise
+vector that allows the system to be robust to target distortions and to sample different transitions given fixed keyframes. To qualitatively evaluate our
+method, we present a custom MotionBuilder plugin that uses our trained
+model to perform in-betweening in production scenarios. To quantitatively
+evaluate performance on transitions and generalizations to longer time horizons, we present well-defined in-betweening benchmarks on a subset of
+the widely used Human3.6M dataset and on LaFAN1, a novel high quality
+motion capture dataset that is more appropriate for transition generation.
+We are releasing this new dataset along with this work, with accompanying
+code for reproducing our baseline results.

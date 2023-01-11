@@ -1,4 +1,5 @@
-
+# Idears
+- Fast Furier Loss
 # Analytical
 ## A Deep Learning Framework for Character Motion Synthesis and Editing
 > We present a framework to synthesize character movements based
